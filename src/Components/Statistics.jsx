@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Row, Statistic, Card } from "antd";
-import { Link } from "react-router-dom";
-import { useVehicules } from "../hooks/useQueries";
+//import { Link } from "react-router-dom";
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 
 const Cars = () => {

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
@@ -7,39 +7,29 @@ import { UserContext } from "../ContextAPI/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
-  const { test, setTest } = useContext(UserContext);
+
+  const { error, dispatch } = useContext(UserContext);
   const onFinish = async (values) => {
     const login_endpoint = "http://localhost:8000/api/user/login";
 
-    /*const response = await fetch(login_endpoint, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
+    dispatch({ type: "LOGIN_START" });
+    try {
+      const response = await axios.post(login_endpoint, {
         email: values.email,
         password: values.password,
-      }),
-    });
-    const data = response.json();
-    console.log(data.user);
-    */
-
-    const response = await axios.post(login_endpoint, {
-      email: values.email,
-      password: values.password,
-    });
-    setUser(response.data);
-    setTest(true);
-    console.log(response.data);
-
-    navigate("/dashboard");
-    //console.log("Success:", values);
+      });
+      dispatch({ type: "LOGIN_SUCCESS", payload: response.data });
+      window.location.reload();
+      navigate("/dashboard/commandes");
+    } catch (err) {
+      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+      onFinishFailed();
+      console.log(error);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    //dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
   };
   return (
     <div className='login'>
@@ -53,6 +43,18 @@ const Login = () => {
           />{" "}
           Dashbord
         </h1>
+        {error && (
+          <>
+            <div className='loginAlertContainer'>
+              <Alert
+                className='loginAlert'
+                message='Alert Message Text'
+                type='error'
+                closable
+              />
+            </div>
+          </>
+        )}
         <Form
           name='basic'
           labelCol={{

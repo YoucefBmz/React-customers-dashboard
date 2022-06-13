@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { Table, Tag, Button, Collapse } from "antd";
+import React from "react";
+import { Collapse } from "antd";
 
-import { Link } from "react-router-dom";
-import { useDrivers } from "../hooks/useQueries";
+//import { Link } from "react-router-dom";
 
 const { Panel } = Collapse;
 

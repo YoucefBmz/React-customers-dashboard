@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Table, Tag, Button } from "antd";
 import { Link } from "react-router-dom";
 import { KEYS_LABLES } from "../constants/EXPENSES_TYPES";
-import { useMissions } from "../hooks/useQueries";
+
 const columns = [
   {
     title: "Reference",
@@ -163,8 +163,7 @@ const Missions = () => {
   const [page, setPage] = useState(1);
   const pageSize = 5;
   const [offset, setOffset] = useState(0);
-  const { data, loading, error } = useMissions(offset, pageSize, {});
-  console.log({ data, loading, error });
+  //console.log({ data, loading, error });
 
   const handleTableChange = (pagination) => {
     setOffset(pagination.pageSize * (pagination.current - 1));
@@ -173,15 +172,15 @@ const Missions = () => {
   return (
     <>
       <h2>Commandes</h2>
+
       <Table
         columns={columns}
         pagination={{
           pageSize: pageSize,
-          total: data?.missionsCount,
+
           current: page,
         }}
         onChange={handleTableChange}
-        loading={loading}
         //dataSource={data?.missions}
         dataSource={dataTable}
       />

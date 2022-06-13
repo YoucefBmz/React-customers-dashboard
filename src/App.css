@@ -37,11 +37,23 @@ body {
   font-size: 2rem;
   font-weight: 600;
 }
-
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 1200px;
+  background-color: #fff;
+}
 .alert {
   margin-top: 20px;
   width: 400px;
   margin: auto;
+
 }
 
 /***
@@ -86,4 +98,22 @@ spinner
     top: 24px;
     height: 32px;
   }
+}
+.loginAlertContainer{
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+.form-container .loginAlert{
+  
+  align-items: center;
+}
+.loginAlert {
+  margin: 20px;
+  width:500px;
+}
+
+.products-paragaph{
+  text-align: center;
 }

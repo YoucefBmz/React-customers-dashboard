@@ -5,31 +5,36 @@ import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
 
 import { UserContext } from "./ContextAPI/UserContext";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./ContextAPI/UserContext";
 
 function App() {
   //const user = true;
   //const { user } = useContext(UserContext);
-  const { test } = useContext(UserContext);
-
+  const { user } = useContext(UserContext);
   return (
     <div className='App'>
       <UserProvider>
-        <Routes>
-          {test && (
-            <>
-              <Route path='/dashboard/*' element={<Dashboard />} />
-            </>
-          )}
-          {!test && (
-            <>
-              <Route path='/dashboard/*' element={<Navigate to='/login' />} />
-            </>
-          )}
-          <Route path='/' element={<Navigate to='/dashboard/' />} />
-          <Route path='/login' element={<Login />} />
-        </Routes>
+        <BrowserRouter>
+          <Routes>
+            {user && (
+              <>
+                <Route path='/dashboard/*' element={<Dashboard />} />
+                <Route
+                  path='/login'
+                  element={<Navigate to='/dashboard/commandes' />}
+                />
+              </>
+            )}
+            {!user && (
+              <>
+                <Route path='/dashboard/*' element={<Navigate to='/login' />} />
+                <Route path='/login' element={<Login />} />
+              </>
+            )}
+            <Route path='/' element={<Navigate to='/dashboard/commandes' />} />
+          </Routes>
+        </BrowserRouter>
       </UserProvider>
     </div>
   );
