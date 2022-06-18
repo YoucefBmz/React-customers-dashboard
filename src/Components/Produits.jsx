@@ -1,9 +1,10 @@
-import { Button, Space, Table } from "antd";
+import { Button, Space, Table, Tag } from "antd";
 import Title from "antd/lib/typography/Title";
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
+
 const columns = [
   {
     title: "Nom du Produits",
@@ -15,11 +16,13 @@ const columns = [
       </Title>
     ),
   },
+  /*
   {
     title: "Description",
     dataIndex: "description",
     key: "description",
   },
+  */
   {
     title: "numéro de série",
     dataIndex: "num_serie",
@@ -31,36 +34,26 @@ const columns = [
     dataIndex: "product_version",
     key: "product_version",
   },
-  /*
+
   {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tags }) => (
+    title: "category",
+    key: "category",
+    dataIndex: "category",
+    render: (category) => (
       <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-
-          if (tag === "loser") {
-            color = "volcano";
-          }
-
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
+        <Tag color='green' key={category}>
+          {category.toUpperCase()}
+        </Tag>
       </>
     ),
   },
-  */
+
   {
     title: "Action",
     key: "action",
     render: (_, record) => (
       <Space size='middle'>
-        <Link to={`/dashboard/produits/${record.product_name}`}>
+        <Link to={`/dashboard/produits/${record._id}`}>
           {" "}
           <Button type='primary' ghost>
             See more
@@ -74,6 +67,17 @@ const Produits = () => {
   const login_endpoint = "http://localhost:8000/dashboard/products";
   const { response, loading, error } = useFetch(login_endpoint);
   //console.log(response, loading, error);
+
+  //pagination:
+  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState({
+    pageSize: 5,
+  });
+  const [offset, setOffset] = useState(0);
+  const handleTableChange = (pagination) => {
+    setOffset(pagination.pageSize * (pagination.current - 1));
+    setPage(pagination.current);
+  };
 
   return (
     <div>
@@ -92,9 +96,15 @@ const Produits = () => {
           loading={loading}
           columns={columns}
           dataSource={response?.data}
+          pagination={{
+            current: page,
+            pageSize: pagination.pageSize,
+            total: response?.data?.length,
+          }}
+          onChange={handleTableChange}
         />
       )}
-      {error && <p>error : {error}</p>}
+      {!response && <p>error :( reload again </p>}
     </div>
   );
 };

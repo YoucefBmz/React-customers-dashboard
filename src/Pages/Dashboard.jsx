@@ -1,5 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
+import { UserContext } from "../ContextAPI/UserContext";
+
+// ant
 import {
   Layout,
   Menu,
@@ -15,14 +18,23 @@ import {
   CarOutlined,
   PieChartOutlined,
   GoogleOutlined,
+  OrderedListOutlined,
+  QuestionCircleOutlined,
+  ContainerOutlined,
 } from "@ant-design/icons";
+
+// components :
 import Commandes from "../Components/Commandes";
 import Questions from "../Components/Questions";
 import Statistics from "../Components/Statistics";
 import Blogs from "../Components/Blogs";
-
-import { UserContext } from "../ContextAPI/UserContext";
 import Produits from "../Components/Produits";
+import Profile from "../Components/Profile";
+
+// details pages
+import ProductDetails from "../DetailsPages/ProductDetails";
+
+// ant design conffg
 const { Header, Content, Sider } = Layout;
 const { Title } = Typography;
 
@@ -53,12 +65,17 @@ const Dashboard = () => {
       <Button>Logout</Button>
     </div>
   );
+
+  const userIcon = user.user_details.username.split(" ");
+  const userIcon2 = userIcon.map((name) => {
+    return name.charAt(0);
+  });
   return (
     <div className='Dashboard'>
       <Layout style={{ minHeight: "100vh" }}>
         <Header className='header'>
           <Title className='appTitle' level={2} style={{ color: "#fff" }}>
-            Sage Dashboard
+            BSC Dashboard
           </Title>
           <h2
             style={{
@@ -73,9 +90,11 @@ const Dashboard = () => {
                 style={{
                   color: "#f56a00",
                   backgroundColor: "#fde3cf",
+                  cursor: "pointer",
+                  textTransform: "uppercase",
                 }}>
                 {" "}
-                RB
+                {userIcon2.join("")}
               </Avatar>{" "}
             </Popover>
             {user.user_details.username}
@@ -94,22 +113,23 @@ const Dashboard = () => {
               defaultSelectedKeys={[`${active()}`]}
               defaultOpenKeys={[`sub${active()}`]}
               style={{ height: "100%", borderRight: 0 }}>
+              <Menu.Item key='4' icon={<UserOutlined />}>
+                <Link to='profile'>Profile</Link>
+              </Menu.Item>
               <Menu.Item key='1' icon={<PieChartOutlined />}>
                 <Link to='commandes'>Voir les commandes</Link>
               </Menu.Item>
-              <Menu.Item key='2' icon={<UserOutlined />}>
+              <Menu.Item key='2' icon={<QuestionCircleOutlined />}>
                 <Link to='questions'>Questions fréquantes</Link>
               </Menu.Item>
-              <Menu.Item key='6' icon={<CarOutlined />}>
+              <Menu.Item key='6' icon={<OrderedListOutlined />}>
                 <Link to='produits'>Produits</Link>
               </Menu.Item>
               <Menu.Item key='3' icon={<CarOutlined />}>
                 <Link to='stats'>Statistiques</Link>
               </Menu.Item>
-              <Menu.Item key='4' icon={<CarOutlined />}>
-                <Link to='settings'>Settings</Link>
-              </Menu.Item>
-              <Menu.Item key='5' icon={<CarOutlined />}>
+
+              <Menu.Item key='5' icon={<ContainerOutlined />}>
                 <Link to='blog'>Communication</Link>
               </Menu.Item>
             </Menu>
@@ -135,6 +155,8 @@ const Dashboard = () => {
                 <Route path='produits' element={<Produits />} />
                 <Route path='stats' element={<Statistics />} />
                 <Route path='blog' element={<Blogs />} />
+                <Route path='profile' element={<Profile />} />
+                <Route path='produits/:id' element={<ProductDetails />} />
               </Routes>
             </Content>
           </Layout>

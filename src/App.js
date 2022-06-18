@@ -7,11 +7,15 @@ import Dashboard from "./Pages/Dashboard";
 import { UserContext } from "./ContextAPI/UserContext";
 import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./ContextAPI/UserContext";
+import { TawkChat } from "./TawkChat.js";
 
+//
 function App() {
-  //const user = true;
-  //const { user } = useContext(UserContext);
   const { user } = useContext(UserContext);
+  if (user) {
+    TawkChat(user);
+  }
+
   return (
     <div className='App'>
       <UserProvider>
