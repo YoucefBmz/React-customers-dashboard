@@ -16,13 +16,7 @@ const columns = [
       </Title>
     ),
   },
-  /*
-  {
-    title: "Description",
-    dataIndex: "description",
-    key: "description",
-  },
-  */
+
   {
     title: "numéro de série",
     dataIndex: "num_serie",
@@ -64,7 +58,8 @@ const columns = [
   },
 ];
 const Produits = () => {
-  const login_endpoint = "http://localhost:8000/dashboard/products";
+  const login_endpoint =
+    "https://sage-dashboard.herokuapp.com/dashboard/products";
   const { response, loading, error } = useFetch(login_endpoint);
   //console.log(response, loading, error);
 

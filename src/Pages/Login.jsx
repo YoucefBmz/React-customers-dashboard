@@ -10,7 +10,8 @@ const Login = () => {
 
   const { error, dispatch } = useContext(UserContext);
   const onFinish = async (values) => {
-    const login_endpoint = "http://localhost:8000/api/user/login";
+    const login_endpoint =
+      "https://sage-dashboard.herokuapp.com/api/user/login";
 
     dispatch({ type: "LOGIN_START" });
     try {

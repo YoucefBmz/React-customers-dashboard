@@ -65,17 +65,3 @@ const Cars = () => {
 };
 
 export default Cars;
-/*
-
-Vehicles table: includes the following columns:
-- ID 
-- Kind: contains two lines: primary line Kind and subline grayed 
-- Brand
-- Registration number
-- Serial number 
-- Status (AVAILABLE, IN_MISSION, SUSPEND)
-- Type (LIGHT, HEAVY) 
-
-
-
-*/

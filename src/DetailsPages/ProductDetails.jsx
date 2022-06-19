@@ -1,19 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 
-import Title from "antd/lib/typography/Title";
 import { Skeleton } from "antd";
 
-import { Button, Descriptions, PageHeader, Tag } from "antd";
+import { Descriptions, PageHeader, Tag } from "antd";
 import Typography from "antd/lib/typography";
-import { LoadingOutlined } from "@ant-design/icons";
 
-const { Paragraph, Text } = Typography;
 const ProductDetails = () => {
   const { id } = useParams();
-  const login_endpoint = "http://localhost:8000/dashboard//product/" + id;
-  const { response, loading, error } = useFetch(login_endpoint);
+  const product_endpoint = "http://localhost:8000/dashboard//product/" + id;
+  const { response, loading, error } = useFetch(product_endpoint);
   console.log({ response, loading, error });
   return (
     <div className='site-page-header-ghost-wrapper'>

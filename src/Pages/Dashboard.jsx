@@ -33,6 +33,7 @@ import Profile from "../Components/Profile";
 
 // details pages
 import ProductDetails from "../DetailsPages/ProductDetails";
+import BlogDetails from "../DetailsPages/BlogDetails";
 
 // ant design conffg
 const { Header, Content, Sider } = Layout;
@@ -41,8 +42,8 @@ const { Title } = Typography;
 const Dashboard = () => {
   const [state, setState] = useState({ collapsed: false });
   const { user } = useContext(UserContext);
+
   const onCollapse = (collapsed) => {
-    console.log(collapsed);
     setState({ collapsed });
   };
   const { collapsed } = state;
@@ -54,22 +55,28 @@ const Dashboard = () => {
     if (location[location.length - 1] === "drivers") return 2;
     if (location[location.length - 1] === "cars") return 3;
   };
-
+  let logoutUser = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
   const content = (
     <div>
       <p>
         <GoogleOutlined />
-        <span> </span> {user.user_details.email}
+        <span> </span> {user?.user_details?.email}
       </p>
 
-      <Button>Logout</Button>
+      <Button onClick={logoutUser}>Logout</Button>
     </div>
   );
 
-  const userIcon = user.user_details.username.split(" ");
-  const userIcon2 = userIcon.map((name) => {
+  const userIcon = user?.user_details?.username.split(" ");
+  const userIcon2 = userIcon?.map((name) => {
     return name.charAt(0);
   });
+
+  // Logout :
+
   return (
     <div className='Dashboard'>
       <Layout style={{ minHeight: "100vh" }}>
@@ -80,10 +87,11 @@ const Dashboard = () => {
           <h2
             style={{
               color: "#fff",
+              textTransform: "capitalize",
             }}>
             <Popover
               placement='bottomRight'
-              title={user.user_details.username}
+              title={user?.user_details?.username}
               content={content}
               trigger='click'>
               <Avatar
@@ -94,10 +102,10 @@ const Dashboard = () => {
                   textTransform: "uppercase",
                 }}>
                 {" "}
-                {userIcon2.join("")}
+                {userIcon2?.join("")}
               </Avatar>{" "}
             </Popover>
-            {user.user_details.username}
+            {user?.user_details?.username}
           </h2>
         </Header>
         <Layout>
@@ -157,6 +165,7 @@ const Dashboard = () => {
                 <Route path='blog' element={<Blogs />} />
                 <Route path='profile' element={<Profile />} />
                 <Route path='produits/:id' element={<ProductDetails />} />
+                <Route path='article/:id' element={<BlogDetails />} />
               </Routes>
             </Content>
           </Layout>
